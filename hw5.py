@@ -49,7 +49,7 @@ def main(filename):
         json.dump(counter.most_common(),json_file)
     with open('wordcount.pkl','wb') as pkl_file:
         # create a csv writer from a file object (or descriptor)
-        pickle.dump(counter.most_common,pkl_file)
+        pickle.dump(counter.most_common(),pkl_file)
     # BONUS: dump to a pickle file named "wordcount.pkl"
     # hint: dump the Counter object directly
 
