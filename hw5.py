@@ -2,6 +2,8 @@
 import csv
 import json
 import string
+import pickle
+from collections import Counter
 
 def main(filename):
     txtfile = open(filename) 
@@ -27,9 +29,7 @@ def main(filename):
                 all_words.append(word)
 
     # compute word count from all_words
-    counter = {}
-    for i in all_words:
-        counter.update({i: all_words.count(i)})
+    counter = Counter(all_words)
     # dump to a csv file named "wordcount.csv":
     # word,count
     # a,12345
@@ -41,13 +41,15 @@ def main(filename):
         # write table head
         writer.writerow(['word', 'count'])
         # write all (word, count) pair into the csv writer
-        writer.writerows(counter.items())
+        writer.writerows(counter.most_common())
 
     # dump to a json file named "wordcount.json"
     with open('wordcount.json','w') as json_file:
         # create a csv writer from a file object (or descriptor)
-        json.dump(counter,json_file)
-
+        json.dump(counter.most_common(),json_file)
+    with open('wordcount.pkl','wb') as pkl_file:
+        # create a csv writer from a file object (or descriptor)
+        pickle.dump(counter.most_common,pkl_file)
     # BONUS: dump to a pickle file named "wordcount.pkl"
     # hint: dump the Counter object directly
 
